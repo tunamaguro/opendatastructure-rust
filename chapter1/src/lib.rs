@@ -3,6 +3,11 @@ pub trait Queue<T> {
     fn remove(&mut self) -> Option<T>;
 }
 
+pub trait Stack<T> {
+    fn push(&mut self, x: T) -> Option<T>;
+    fn pop(&mut self) -> Option<T>;
+}
+
 pub trait List<T> {
     fn size(&self) -> usize;
     fn get(&self, i: usize) -> Option<&T>;

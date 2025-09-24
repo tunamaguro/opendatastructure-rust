@@ -1,4 +1,4 @@
-use chapter1::List;
+use chapter1::{List, Stack};
 
 use super::Array;
 
@@ -71,6 +71,16 @@ impl<T> List<T> for ArrayStack<T> {
         } else {
             None
         }
+    }
+}
+
+impl<T> Stack<T> for ArrayStack<T> {
+    fn push(&mut self, x: T) -> Option<T> {
+        List::add(self, self.size(), x)
+    }
+
+    fn pop(&mut self) -> Option<T> {
+        self.remove(self.size() - 1)
     }
 }
 
