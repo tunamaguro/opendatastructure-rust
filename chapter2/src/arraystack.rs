@@ -44,7 +44,7 @@ impl<T> List<T> for ArrayStack<T> {
             self.resize();
         }
 
-        if i < self.n {
+        if i <= self.n {
             // i..nを右に1つずらす
             for k in (i..self.n).rev() {
                 self.a.swap(k, k + 1);
@@ -71,5 +71,42 @@ impl<T> List<T> for ArrayStack<T> {
         } else {
             None
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use chapter1::List;
+
+    #[test]
+    fn operation() {
+        // Initialize
+        let mut a = super::ArrayStack::with_capacity(6);
+        a.add(0, 'b');
+        a.add(1, 'r');
+        a.add(2, 'e');
+        a.add(3, 'd');
+
+        // Add
+        a.add(2, 'e');
+        a.add(5, 'r');
+        a.add(5, 'e');
+
+        // remove
+        let x = a.remove(4);
+        assert_eq!(x, Some('d'));
+        let x = a.remove(4);
+        assert_eq!(x, Some('e'));
+        let x = a.remove(4);
+        assert_eq!(x, Some('r'));
+
+        // set
+        a.set(2, 'i');
+
+        // check
+        assert_eq!(a.get(0), Some(&'b'));
+        assert_eq!(a.get(1), Some(&'r'));
+        assert_eq!(a.get(2), Some(&'i'));
+        assert_eq!(a.get(3), Some(&'e'));
     }
 }

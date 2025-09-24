@@ -8,7 +8,7 @@ struct Array<T> {
 
 impl<T> Array<T> {
     fn with_capacity(len: usize) -> Self {
-        let a = core::iter::repeat_with(|| None).collect::<Box<[_]>>();
+        let a = core::iter::repeat_with(|| None).take(len).collect::<Box<[_]>>();
         Self { a }
     }
 
