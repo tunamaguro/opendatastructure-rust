@@ -3,6 +3,13 @@ pub trait Queue<T> {
     fn remove(&mut self) -> Option<T>;
 }
 
+pub trait Deque<T> {
+    fn add_front(&mut self, x: T) -> Option<T>;
+    fn remove_front(&mut self) -> Option<T>;
+    fn add_back(&mut self, x: T) -> Option<T>;
+    fn remove_back(&mut self) -> Option<T>;
+}
+
 pub trait List<T> {
     fn size(&self) -> usize;
     fn get(&self, i: usize) -> Option<&T>;
