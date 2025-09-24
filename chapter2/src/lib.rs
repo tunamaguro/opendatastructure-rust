@@ -1,4 +1,5 @@
 pub mod arraystack;
+pub mod arrayqueue;
 
 use std::ops::{Index, IndexMut};
 
