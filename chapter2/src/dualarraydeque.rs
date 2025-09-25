@@ -53,8 +53,8 @@ impl<T> DualArrayDeque<T> {
 
             self.front.a = new_front;
             self.front.n = n_front;
-            self.front.a = new_back;
-            self.front.n = n_back;
+            self.back.a = new_back;
+            self.back.n = n_back;
         }
     }
 }
@@ -91,6 +91,10 @@ impl<T> List<T> for DualArrayDeque<T> {
     }
 
     fn add(&mut self, i: usize, x: T) -> Option<T> {
+        if i > self.size() {
+            return Some(x);
+        }
+
         let y = if i < self.front.size() {
             self.front.add(self.front.size() - i, x)
         } else {
@@ -101,6 +105,10 @@ impl<T> List<T> for DualArrayDeque<T> {
     }
 
     fn remove(&mut self, i: usize) -> Option<T> {
+        if i >= self.size() {
+            return None;
+        }
+
         let x = if i < self.front.size() {
             self.front.remove(self.front.size() - i - 1)
         } else {
@@ -108,5 +116,33 @@ impl<T> List<T> for DualArrayDeque<T> {
         };
         self.balance();
         x
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn operation() {
+        // Initialize
+        let mut a = DualArrayDeque::with_capacity(10);
+        for (i, c) in "abcd".chars().enumerate() {
+            a.add(i, c);
+        }
+
+        // Add
+        a.add(3, 'x');
+        a.add(4, 'y');
+
+        // Remove
+        let x = a.remove(0);
+        assert_eq!(x, Some('a'));
+
+        // Check
+        for (i, c) in "bcxyd".chars().enumerate() {
+            let x = a.get(i);
+            assert_eq!(x, Some(&c));
+        }
     }
 }
