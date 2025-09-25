@@ -3,14 +3,22 @@ use chapter1::{List, Queue};
 use super::Array;
 
 pub struct ArrayStack<T> {
-    a: Array<T>,
-    n: usize,
+    pub(crate) a: Array<T>,
+    pub(crate) n: usize,
 }
 
 impl<T> ArrayStack<T> {
     pub fn with_capacity(len: usize) -> Self {
         let a = Array::with_capacity(len);
         Self { a, n: 0 }
+    }
+
+    pub(crate) fn get_mut(&mut self, i: usize) -> Option<&mut Option<T>> {
+        if i < self.n {
+            Some(&mut self.a[i])
+        } else {
+            None
+        }
     }
 
     fn resize(&mut self) {

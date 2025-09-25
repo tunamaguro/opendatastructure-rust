@@ -1,6 +1,7 @@
 pub mod arraystack;
 pub mod arrayqueue;
 pub mod arraydeque;
+pub mod dualarraydeque;
 
 use std::ops::{Index, IndexMut};
 
