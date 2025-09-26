@@ -13,6 +13,29 @@ impl<T> ArrayStack<T> {
         Self { a, n: 0 }
     }
 
+    pub fn add_all<I>(&mut self, i: usize, it: I)
+    where
+        I: Iterator<Item = T> + ExactSizeIterator,
+    {
+        let added_size = it.len();
+        // 要素の伸長
+        if self.size() + added_size > self.a.length() {
+            let mut new_a = Array::with_capacity(2 * self.size().max(self.size() + added_size));
+            for k in 0..self.n {
+                core::mem::swap(&mut self.a[k], &mut new_a[k]);
+            }
+            self.a = new_a;
+        }
+
+        for k in (i..self.n).rev() {
+            self.a.swap(k, k + added_size);
+        }
+        for (k, v) in it.enumerate() {
+            self.a[i + k] = Some(v);
+        }
+        self.n += added_size;
+    }
+
     pub(crate) fn get_mut(&mut self, i: usize) -> Option<&mut Option<T>> {
         if i < self.n {
             Some(&mut self.a[i])
@@ -104,6 +127,34 @@ mod tests {
         a.add(1, 'r');
         a.add(2, 'e');
         a.add(3, 'd');
+
+        // Add
+        a.add(2, 'e');
+        a.add(5, 'r');
+        a.add(5, 'e');
+
+        // remove
+        let x = a.remove(4);
+        assert_eq!(x, Some('d'));
+        let x = a.remove(4);
+        assert_eq!(x, Some('e'));
+        let x = a.remove(4);
+        assert_eq!(x, Some('r'));
+
+        // set
+        a.set(2, 'i');
+
+        // check
+        assert_eq!(a.get(0), Some(&'b'));
+        assert_eq!(a.get(1), Some(&'r'));
+        assert_eq!(a.get(2), Some(&'i'));
+        assert_eq!(a.get(3), Some(&'e'));
+    }
+
+    #[test]
+    fn operation_all() {
+        let mut a = super::ArrayStack::with_capacity(0);
+        a.add_all(0, ['b', 'r', 'e', 'd'].into_iter());
 
         // Add
         a.add(2, 'e');
