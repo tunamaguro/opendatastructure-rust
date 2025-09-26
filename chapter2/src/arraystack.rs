@@ -68,7 +68,7 @@ impl<T> List<T> for ArrayStack<T> {
     fn remove(&mut self, i: usize) -> Option<T> {
         if i < self.n {
             let x = self.a[i].take();
-            for k in i..self.n {
+            for k in i..(self.n - 1) {
                 self.a.swap(k, k + 1);
             }
             self.n -= 1;

@@ -2,6 +2,7 @@ pub mod arraystack;
 pub mod arrayqueue;
 pub mod arraydeque;
 pub mod dualarraydeque;
+pub mod rootisharraystack;
 
 use std::ops::{Index, IndexMut};
 
