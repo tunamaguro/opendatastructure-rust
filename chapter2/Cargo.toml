@@ -5,3 +5,4 @@ edition = "2024"
 
 [dependencies]
 chapter1 = { workspace = true }
+fastrand = "2.3.0"

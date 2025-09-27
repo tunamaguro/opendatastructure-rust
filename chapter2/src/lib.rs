@@ -3,6 +3,7 @@ pub mod arrayqueue;
 pub mod arraydeque;
 pub mod dualarraydeque;
 pub mod rootisharraystack;
+pub mod randomqueue;
 
 use std::ops::{Index, IndexMut};
 

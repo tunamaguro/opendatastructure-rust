@@ -44,7 +44,7 @@ impl<T> ArrayStack<T> {
         }
     }
 
-    fn resize(&mut self) {
+    pub(crate) fn resize(&mut self) {
         let mut new_a = Array::with_capacity((2 * self.n).max(1));
         for i in 0..self.n {
             core::mem::swap(&mut self.a[i], &mut new_a[i]);
